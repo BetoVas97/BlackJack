@@ -1,11 +1,10 @@
 import React ,{useState,useEffect} from 'react';
-import logo from './logo.svg';
 import axios from 'axios';
 import './App.css';
-import {cartas} from  './cartas.json'
+import {BrowserRouter, Route, Switch, Link, NavLink} from 'react-router-dom';
 import FormularioCarta from './components/FormularioCarta';
 
-function App() {
+function Partida(){
   const [cartas,setCartas]=useState([]);
 
   function tirarCarta(id){
@@ -23,20 +22,20 @@ function App() {
       console.log(result.data);
       setCartas(result.data.cartas);
      });
-    console.log(cartas);
     console.log('Effect componentDidMount!');
   },[]);
 
-
-  return (
+  return(
     <div>
-      <nav className="navbar navbar-dark bg-dark">
-        <a className="navbar-brand" href="/">
-          Número de Cartas <span className="badge badge-pill badge-light">
-                              {cartas.length}
-                              </span>
-        </a>
-      </nav>
+      {/*<h2>Numero de mesa </h2>
+      <h3>Numero de jugadores en la mesa</h3>
+      <div>
+        <h3>Cartas de la casa</h3>
+      </div>
+      <div>
+      <h3>Tus cartas</h3>
+      <h5>Agarrar carta</h5>
+      </div>*/}
       <FormularioCarta onAgregarCarta={agregarCarta}/>
 
       {cartas.map((carta,i) => {
@@ -56,67 +55,47 @@ function App() {
                 </div>
               </div>);
       })}
+      
+      <NavLink to="/" activeClassName="is-active" exact>Abandonar juego y volver a menu </NavLink>
+    </div>
+    );
+}
+
+function Presentacion(){
+  return (
+    <div>
+      <h1>Black Jack 21</h1>
+      <h3>Elije una opcion para empezar a jugar</h3>
+      <NavLink to="/" activeClassName="is-active" exact>Pagina de presentacion </NavLink>
+      <NavLink to="/agregar-partida" activeClassName="is-active"> Agregar Partida </NavLink>
+      <NavLink to="/unirse-partida" activeClassName="is-active"> Unirse a Partida</NavLink>
+    </div>
+  );
+}
+
+function e404(){
+  return(
+    <div>
+      <h1>404</h1>
+      <Link to="/">Ir al menú</Link>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+      <Switch>
+        <Route path='/' component={Presentacion} exact/>
+        <Route path='/agregar-partida' component={Partida} />
+        <Route component={e404} />
+      </Switch>
+    </BrowserRouter>
     </div>
     );
 
 }
-// class App extends React.Component{
-//   constructor(){
-//     super();
-//     this.state = {
-//       cartas
-//     }
-//   }
-//
-//   tirarCarta(id){
-//     this.setState({
-//       cartas:this.state.cartas.filter((e,i)=>{
-//         return i!== id
-//       })
-//     });
-//   }
-//
-//   render(){
-//     console.log(this.state);
-//     const cartasActuales = this.state.cartas.map((carta, i)=>{
-//       return(
-//         <div className="col-md-4" key={i}>
-//           <div className="card mt-4">
-//             <div className="card-header">
-//               <h3>Carta {i+1}</h3>
-//             </div>
-//             <div className="card-body">
-//               <h3>Mazo: {carta.mazo}</h3>
-//               <h4>Número: {carta.numero}</h4>
-//               <h5>Valor: {carta.valor}</h5>
-//             </div>
-//             <div className="card-footer">
-//               <button type="button" onClick={this.tirarCarta.bind(this, i)} class="btn btn-danger">Tirar Carta</button>
-//
-//             </div>
-//           </div>
-//         </div>
-//       );
-//     });
-//     return (
-//       <div>
-//         <nav  className="navbar navbar-dark bg-dark">
-//           <a className="navbar-brand" href="/">
-//             Número de Cartas <span className="badge badge-pill badge-light">{this.state.cartas.length}
-//             </span>
-//           </a>
-//
-//         </nav>
-//
-//         <FormularioCarta/>
-//
-//         <div>
-//           {cartasActuales}
-//         </div>
-//       </div>
-//
-//     );
-//   }
-// }
+
 
 export default App;

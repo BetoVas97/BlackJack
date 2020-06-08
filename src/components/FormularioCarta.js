@@ -40,7 +40,7 @@ const FormularioCarta = (props)=>{
           <input type="text" onChange={handleInput} name="valor" placeholder="Valor" className="form-control"/>
         </div>
         <button type="submit" className="btn btn-primary">
-          Agregar cartasActuales
+          Agregar cartas
         </button>
       </form>
     </div>
