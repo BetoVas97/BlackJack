@@ -2,11 +2,11 @@ const app = require('express')();
 const serveStatic = require('serve-static');
 const server = require('http').createServer(app);
 const io = require("socket.io")(server);
-const newGame = require('./lib/blackjack.js');
+const newGame = require('./controllers/blackjack.js');
 const mongoose = require('mongoose');
 const model = require("./models/schema");
 
-const port = 8081;
+const port = 8080;
 
 server.listen(port);
 

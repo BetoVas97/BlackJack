@@ -23,8 +23,8 @@ function Controls(props){
     <div style={{"display": "flex",
                  "marginTop": "15px",
                  "justifyContent": "center"}}>
-      <button onClick={hit} className="btn btn-lg btn-success mr-1"> hit </button>
-      <button onClick={stand} className="btn btn-lg btn-danger ml-1"> stand </button>
+      <button onClick={hit} className="btn btn-lg btn-success mr-1"> Pedir Carta </button>
+      <button onClick={stand} className="btn btn-lg btn-danger ml-1"> Plantarse </button>
     </div>
   );
   } else {
@@ -32,7 +32,7 @@ function Controls(props){
       <div style={{"display": "flex",
                    "marginTop": "15px",
                    "justifyContent": "center"}}>
-        <button onClick={dealMeIn} className="btn btn-lg btn-primary"> deal me in </button>
+        <button onClick={dealMeIn} className="btn btn-lg btn-primary"> Unirme a la mesa </button>
       </div>
     );
   }
