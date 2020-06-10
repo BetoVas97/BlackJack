@@ -1,7 +1,7 @@
 const app = require('express')();
 const serveStatic = require('serve-static');
 const server = require('http').createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io").listen(server);
 const newGame = require('./controllers/blackjack.js');
 const mongoose = require('mongoose');
 const model = require("./models/schema");
@@ -10,11 +10,14 @@ const port = 8080;
 
 server.listen(port);
 
+console.log("server is listening on port: ", port);
+
 const session = new Set();
 
-const url = process.env.PWD + '/client/build';
+const url = process.env.PWD + '/cliente/build';
 
 app.use(serveStatic('public'));
+
 
 console.log(url);
 
