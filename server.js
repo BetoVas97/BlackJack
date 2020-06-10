@@ -1,19 +1,77 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-var app = express();
-const game = require("./roots/game");
-// Configuracion de Mongoose
+const app = require('express')();
+const serveStatic = require('serve-static');
+const server = require('http').createServer(app);
+const io = require("socket.io")(server);
+const newGame = require('./lib/blackjack.js');
 const mongoose = require('mongoose');
-const db_url = 'mongodb://localhost/game';
+const model = require("./models/schema");
 
-mongoose.connect(db_url,{useNewUrlParser:true, useUnifiedTopology:true});
+const port = 8081;
+
+server.listen(port);
+
+const session = new Set();
+
+const url = process.env.PWD + '/client/build';
+
+app.use(serveStatic('public'));
+
+console.log(url);
+
+const game = newGame();
+
+io.on('connection', function(socket) {
+
+  if(game.inProgress()) {
+    socket.emit('game', game.toJson());
+  }
+
+  socket.on('deal', function() {
+
+    game.joinTable(socket.id);
+
+    if(!game.inProgress()) {
+      game.startRound();
+    }
+
+    io.emit('game', game.toJson());
+  });
+
+  socket.on('hit', function() {
+    if(game.inProgress()) {
+      game.hit(socket.id);
+      io.emit('game', game.toJson());
+    }
+    if(game.winnerDeclared()) {
+      setTimeout(function() {
+        game.startRound();
+        io.emit('game', game.toJson());
+      }, 3000);
+    }
+  });
+
+  socket.on('stand', function() {
+    if(game.inProgress()) {
+      game.stand(socket.id);
+      io.emit('game', game.toJson());
+    }
+
+    if(game.winnerDeclared()) {
+      setTimeout(function() {
+        game.startRound();
+        io.emit('game', game.toJson());
+      }, 3000);
+    }
+
+  });
+
+  socket.on('disconnect', function() {
+    game.leave(socket.id);
+    session.delete(socket.id);
+  });
+});
+
+mongoose.connect('mongodb://localhost/game',{useNewUrlParser:true, useUnifiedTopology:true});
 var db = mongoose.connection;
 mongoose.Promise = global.Promise;
 db.on('error', console.error.bind(console, 'Error en la conexion'));
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended:true}));
-app.use('/', game);
-app.listen(8585, ()=>{
-    console.log('Servidor en línea');
-});
