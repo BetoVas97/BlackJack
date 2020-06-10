@@ -109,7 +109,7 @@ class Table extends Component {
           </div>
         );
       } else {
-        return <h1 style={{"color": "#184702"}}>Blackjack</h1>;
+        return <h1 style={{"color": "#184702"}}>Blackjack 21</h1>;
       }
     };
 

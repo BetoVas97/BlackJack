@@ -6,7 +6,7 @@ const newGame = require('./controllers/blackjack.js');
 const mongoose = require('mongoose');
 const model = require("./models/schema");
 
-const port = 8080;
+const port = 8081;
 
 server.listen(port);
 
