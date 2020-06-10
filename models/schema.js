@@ -1,10 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var GameSchema = new Schema({
-        idGame:{type:Number, required: true},
-        idPlayer : {type : Number, required : true},
-        deck:{type: Array, required: true}
+var GameState = new Schema({
+        idGame:{
+                type:Number, 
+                required: true
+        },
+        idPlayer:{
+                type : String, 
+                required : true
+        },
+        hand:{
+                type: Array, 
+                required: true
+        },
+        points:{
+                type: Number,
+                required: true
+        },
+        winner:{
+                type: String
+        }
 });
 
-module.exports = mongoose.model('Game', GameSchema);
+module.exports = mongoose.model('Game', GameState);

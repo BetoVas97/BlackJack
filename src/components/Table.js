@@ -84,7 +84,7 @@ class Table extends Component {
                        "borderRadius": "5px",
                        "backgroundColor": isSeated(this.props.id)}}>
             {hand.length > 0 ? hand.map(cardDisplay) : "" } </div>
-          <small>Score: {score}</small>
+          <small>Puntuación: {score}</small>
         </div>
       );
     };
@@ -101,7 +101,7 @@ class Table extends Component {
         return (
           <div>
             <small>
-              Dealer
+              Casa
             </small>
             <div className="dealerSpot">
               {DealerCards}
