@@ -2,6 +2,18 @@
 
 Implementación de BlackJack21 con hasta 3 jugadores concurrentes utilizando las siguientes tecnologías: JavaScript, Node, Express, MongoDB, Mongoose, Sockets y React.
 
+## Las librerías que se requieren para su instalación son:
+
+Para el servidor:
+- Express
+- Socket.io
+
+
+Para el cliente:
+- Socket.io-client
+- Mongoose
+- *Todas las librerias por defecto de React
+
 Para correr el juego ingresar el siguiente comando en el folder cliente:
 
 ### `npm start`
