@@ -4,7 +4,6 @@ const server = require('http').createServer(app);
 const io = require("socket.io").listen(server);
 const newGame = require('./controllers/blackjack.js');
 const mongoose = require('mongoose');
-const model = require("./models/schema");
 
 const port = 8081;
 

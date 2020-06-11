@@ -1,5 +1,6 @@
 const newDeck = require('./deck.js');
 const mongoose = require("../models/schema")
+const mongooseEnd = require("../models/schemaend");
 
 // Blackjack game.
 function BlackjackGame () {
@@ -48,15 +49,15 @@ BlackjackGame.prototype.startRound = function() {
     this.dealerHand.cards.push(this.cards.pop());
     this.activePlayers.map(player => player.hand.cards.push(this.cards.pop()));
   }
-  
+
   for(let i = 0; i<this.activePlayers.length; i++){
     var state = new mongoose({
       idGame:0,
       idPlayer:i,
       hand:this.activePlayers[i].hand.cards,
-      points: 0
+      points:this.activePlayers[i].hand.getScore()
     })
-    
+
     state.save((err)=>{
       if(err) throw err;
     });
@@ -83,11 +84,7 @@ BlackjackGame.prototype.hit = function (id) {
     targetPlayer = this.activePlayers.filter(player => player.id === id);
 
     targetPlayer[0].hand.cards.push(this.cards.pop());
-    
-    mongoose.findOneAndUpdate({_id:id},{
-      hand:targetPlayer[0].hand.cards,
-      points:targetPlayer[0].hand.getScore()
-    })
+
 
     if(targetPlayer[0].hand.isBust()) {
       this.stand(id);
@@ -101,9 +98,10 @@ BlackjackGame.prototype.stand = function(id) {
 
     if(this.activePlayers[this.turnIndex]) {
       this.turn = this.activePlayers[this.turnIndex].id;
+
     }
     else {
-      this.turn = "Casa";
+      this.turn = "dealer";
       this.dealerTurn();
     }
   }
@@ -127,14 +125,14 @@ BlackjackGame.prototype.winnerDeclared = function() {
 BlackjackGame.prototype.calculateWinner = function() {
 
   const dealerScore = this.dealerHand.getScore();
-  
+
   var state = new mongoose({
     idGame:0,
     idPlayer:'casa',
-    hand: this.dealerHand.hand.cards,
+    hand: this.dealerHand.cards,
     points: this.dealerHand.getScore()
   });
-    
+
   state.save((err)=>{
     if(err) throw err;
   });
@@ -153,9 +151,33 @@ BlackjackGame.prototype.calculateWinner = function() {
         return false;
       }
     }
- };
+  };
 
   const winners = this.activePlayers.filter(decideWinner);
+
+  for(let i = 0; i<this.activePlayers.length; i++){
+    var state = new mongooseEnd({
+      idGame:0,
+      idPlayer:i,
+      hand:this.activePlayers[i].hand.cards,
+      points:this.activePlayers[i].hand.getScore()
+    })
+
+    state.save((err)=>{
+      if(err) throw err;
+    });
+  }
+
+  var state = new mongooseEnd({
+    idGame:0,
+    idPlayer:'casa',
+    hand: this.dealerHand.cards,
+    points: this.dealerHand.getScore()
+  })
+
+  state.save((err)=>{
+    if(err) throw err;
+  });
 
   if(winners.length < 1) {
     this.winner = "dealer";
@@ -175,19 +197,19 @@ BlackjackGame.prototype.calculateWinner = function() {
 BlackjackGame.prototype.toJson = function () {
 
   const activePlayers = this.activePlayers.map((player) => ({id: player.id,
-                                                             hand: player.hand.cards,
-                                                             score: player.hand.getScore()}));
+    hand: player.hand.cards,
+    score: player.hand.getScore()}));
 
   const dealerHand = this.turn === "dealer" ? this.dealerHand.cards :
-        this.dealerHand.cards.map(function(card, idx) {
-          if(idx === 0) {
-            return ({
-              rank : "secret",
-              suit: "secret"});
+      this.dealerHand.cards.map(function(card, idx) {
+            if(idx === 0) {
+              return ({
+                rank : "secret",
+                suit: "secret"});
+            }
+            return card;
           }
-          return card;
-        }
-                                                                                             );
+      );
   return {
     inGamePlayers: activePlayers,
     waitingPlayers: this.players.filter(player => activePlayers.some(active => active.id !== player.id)),
