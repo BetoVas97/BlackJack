@@ -1,6 +1,6 @@
 ## BlackJack 21
 
-Implementación BlackJack21 hasta 3 jugadores concurrentes utilizando las siguientes tecnologías: JavaScript, Node, Express, MongoDB, Mongoose, Sockets y React.
+Implementación de BlackJack21 con hasta 3 jugadores concurrentes utilizando las siguientes tecnologías: JavaScript, Node, Express, MongoDB, Mongoose, Sockets y React.
 
 Para correr el juego ingresar el siguiente comando en el folder cliente:
 
