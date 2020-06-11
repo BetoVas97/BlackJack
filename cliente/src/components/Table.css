@@ -1,4 +1,5 @@
 .Table {
+    /*background-image: url("/table.png");*/
     height: 359px;
     width: 591px;
     display: flex;
@@ -8,20 +9,20 @@
 }
 
 .playerHand {
-    background-color: gray;
+    /*background-color: green;*/
     border-radius: 3px;
     margin: 15px;
 }
 
 .dealerSpot {
     justify-content: center;
-    background-color: gray;
+    /*background-color: white;*/
     border-radius: 3px;
     display: flex;
 }
 
 .cardHolder{
-    background-color: white;
+    /*background-color: white;*/
     display: flex;
 }
 
@@ -29,5 +30,4 @@
 .dealerSpot > div:first-child {
     display: none;
 }
-
 

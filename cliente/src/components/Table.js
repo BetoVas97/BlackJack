@@ -109,7 +109,17 @@ class Table extends Component {
           </div>
         );
       } else {
-        return <h1 style={{"color": "#184702"}}>Blackjack 21</h1>;
+        return <> <h1 style={{"color": "#052116"}}>BlackJack 21</h1>
+        <img src='/bj.png'width="103" height="103" class="center"></img>
+        <h3 class="center">Reglas:</h3>
+        <ul>
+          <li>Para ganar el juego, la puntuación del jugador debera ser lo más cercano a 21 puntos pero sin pasarse,
+el que este más cerca de 21 gana.</li>
+          <li>Cada jugador empieza con dos cartas boca arriba, la casa recibe una carta boca arriba.</li>
+          <li>El jugador de decidir si plantarse o pedir otra carta para acercarse a 21. Plantarse es definitivo. </li>
+          <li>Cada jugador en una partida recibe cartas de la misma baraja.</li>
+        </ul>
+          </>;
       }
     };
 

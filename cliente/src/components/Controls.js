@@ -33,6 +33,7 @@ function Controls(props){
                    "marginTop": "15px",
                    "justifyContent": "center"}}>
         <button onClick={dealMeIn} className="btn btn-lg btn-primary"> Unirse a la mesa </button>
+        
       </div>
     );
   }
