@@ -2,7 +2,7 @@
 
 Implementación BlackJack21 hasta 3 jugadores concurrentes utilizando las siguientes tecnologías: JavaScript, Node, Express, MongoDB, Mongoose, sockets y React.
 
-Para correr el juego ingresar el siguiente comando el folder cliente:
+Para correr el juego ingresar el siguiente comando en el folder cliente:
 
 ### `npm start`
 
