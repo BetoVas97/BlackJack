@@ -1,5 +1,4 @@
 .Table {
-    background-image: url("/table.png");
     height: 359px;
     width: 591px;
     display: flex;
@@ -9,14 +8,14 @@
 }
 
 .playerHand {
-    background-color: green;
+    background-color: gray;
     border-radius: 3px;
     margin: 15px;
 }
 
 .dealerSpot {
     justify-content: center;
-    background-color: green;
+    background-color: gray;
     border-radius: 3px;
     display: flex;
 }
@@ -30,4 +29,5 @@
 .dealerSpot > div:first-child {
     display: none;
 }
+
 
